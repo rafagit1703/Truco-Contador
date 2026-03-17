@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
-  Button,
   Image,
   StyleSheet,
   Text,
@@ -9,15 +8,20 @@ import {
   View,
 } from "react-native";
 
-export default function App() {
-  const [contador, setContador] = useState(0);
 
-  const diminuir = () => {
-    setContador(contador - 1);
-  };
-  const aumentar = () => {
-    setContador(contador + 1);
-  };
+
+export default function App() {
+  const [nos, setNos] = useState(0);
+  const [eles, setEles] = useState(0);
+
+  const aumentarNos = () => setNos(nos + 1);
+  const diminuirNos = () => setNos(Math.max(0, nos - 1));
+
+  const aumentarEles = () => setEles(eles + 1);
+  const diminuirEles = () => setEles(Math.max(0, eles - 1));
+
+  
+
   return (
     <View style={styles.container}>
       <Image
@@ -25,27 +29,45 @@ export default function App() {
         style={styles.minhaImagem}
       />
 
-      <View style={{flexDirection: "row"}}>
-        <Text style={{marginRight: 150, fontSize: 40}}>Nós</Text>
-        <Text style={{fontSize: 40}}>Eles</Text>
-      </View>
+      {/* Botões */}
+   <View style={styles.botoes}>
+  
+  {/* Nós */}
+  <View style={styles.coluna}>
+    <Text style={styles.textoNome}>Nós</Text>
+    <Text style={styles.placar}>{nos}</Text>
 
-      <Text style={{ marginTop: 30, marginBottom: 20, fontSize: 35 }}>
-        {contador}
-      </Text>
+    <View style={styles.linhaBotoes}>
+      <TouchableOpacity style={styles.botaoAumentar} onPress={aumentarNos}>
+        <Text style={styles.textoBotao}>+</Text>
+      </TouchableOpacity>
 
-      <View style={styles.botoes}>
-        <TouchableOpacity style={styles.botaoAumentar} onPress={aumentar}>
-          <Text style={styles.textoBotao}>+</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.botaoDiminuir} onPress={diminuirNos}>
+        <Text style={styles.textoBotao}>-</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
 
-        <TouchableOpacity style={styles.botaoDiminuir} onPress={diminuir}>
-          <Text style={styles.textoBotao}>-</Text>
-        </TouchableOpacity>
-      </View>
+  {/* Eles */}
+  <View style={styles.coluna}>
+    <Text style={styles.textoNome}>Eles</Text>
+    <Text style={styles.placar}>{eles}</Text>
+
+    <View style={styles.linhaBotoes}>
+      <TouchableOpacity style={styles.botaoAumentar} onPress={aumentarEles}>
+        <Text style={styles.textoBotao}>+</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.botaoDiminuir} onPress={diminuirEles}>
+        <Text style={styles.textoBotao}>-</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+
+</View>
 
       <StatusBar style="auto" />
-    </View> 
+    </View>
   );
 }
 
@@ -95,4 +117,21 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
+  textoNome: {
+  fontSize: 35,
+},
+
+placar: {
+  fontSize: 40,
+  fontWeight: "bold",
+},
+
+coluna: {
+  alignItems: "center",
+  marginHorizontal: 20,
+},
+linhaBotoes: {
+  flexDirection: "row",
+  marginTop: 10,
+},
 });
